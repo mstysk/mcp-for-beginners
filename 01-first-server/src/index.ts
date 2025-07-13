@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const server = new McpServer({
   name: "Demo",
-  version: "1.0.0"
+  version: "1.1.0"
 });
 
 server.tool("add",
@@ -42,6 +42,35 @@ server.tool("divide",
     return {
       content: [{ type: "text", text: String(a / b) }]
     }
+  }
+);
+
+server.tool("fibonacci",
+  { n: z.number().int().min(0) },
+  async ({ n }) => {
+    console.log(`fibonacci tool called with n=${n}`);
+
+    if (n === 0) {
+      console.log("Returning single 0");
+      return { content: [{ type: "text", text: "0" }] };
+    }
+    if (n === 1) {
+      console.log("Returning 0, 1");
+      return { content: [{ type: "text", text: "0, 1" }] };
+    }
+
+    const sequence = [0, 1];
+    console.log("Calculating fibonacci sequence...");
+    for (let i = 2; i < n; i++) {
+      sequence.push(sequence[i - 1] + sequence[i - 2]);
+      console.log(`Added ${sequence[i]} to sequence`);
+    }
+
+    const result = sequence.join(", ");
+    console.log(`Final result: ${result}`);
+    return {
+      content: [{ type: "text", text: result }]
+    };
   }
 );
 
