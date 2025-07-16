@@ -76,7 +76,7 @@ server.tool("fibonacci",
 
 server.resource(
   "greeting",
-  new ResourceTemplate("greeting://{:name}", { list: undefined }),
+  new ResourceTemplate("greeting://{name}", { list: undefined }),
   async (uri, { name }) => ({
     contents: [{
       uri: uri.href,

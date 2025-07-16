@@ -3,7 +3,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 const transport = new StdioClientTransport({
   command: "node",
-  args: ["server.js"]
+  args: ["build/index.js"]
 })
 
 const client = new Client({
@@ -13,25 +13,31 @@ const client = new Client({
 
 await client.connect(transport);
 
-const prompts = await client.listPrompts();
+
+// List resources
 const resources = await client.listResources();
-const tools = await client.listTools();
+for (let resource in resources.resources) {
+  console.log("Resource: ", resource);
+}
 
-const resource = await client.readResource({
-  uri: "file://example.txt"
+// Use the greeting resource
+const greeting = await client.readResource({
+  uri: "greeting://World"
 });
+console.log("Greeting:", greeting.contents[0].text);
 
+const templates = await client.listResourceTemplates();
+for (let template of templates.resourceTemplates) {
+  console.log("Resource template:", template.name);
+}
+
+// Call a tool
 const result = await client.callTool({
-  name: "example-tool",
-  argumetns: {
-    arg1: "value"
-  }
-});
-
-const promptResult = await client.getPrompt({
-  name: "review-code",
+  name: "add",
   arguments: {
-    code: "console.log(\"Hello, world!\")"
+    a: 1,
+    b: 8
   }
 })
 
+console.log("Tool result:", result);
