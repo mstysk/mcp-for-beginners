@@ -5,8 +5,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "client": "tsc && node build/client.js",
-    "inspector": "npx @modelcontextprotocol/inspector node build/index.js",
+    "client": "tsc && node ../bin/01-first-server/client.js",
+    "inspector": "npx @modelcontextprotocol/inspector node ../bin/01-first-server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
