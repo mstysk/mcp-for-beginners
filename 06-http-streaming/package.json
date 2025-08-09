@@ -1,0 +1,29 @@
+{
+  "name": "05-sse-server",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "src/index.js",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "echo": "bash -c 'source .env && echo ${PROJECT}'",
+    "init": "bash -c 'source .env && sed -e \"s/\\${PROJECT}/${PROJECT}/g\" tsconfig.json.tmp > tsconfig.json' && rm tsconfig.json.tmp && mkdir src && touch src/index.ts && npm init",
+    "build": "tsc",
+    "client": "bash -c 'source .env && npm run build && node --env-file=.env ../bin/${PROJECT}/client.js'",
+    "index": "bash -c 'source .env && npm run build && node --env-file=.env ../bin/${PROJECT}/index.js'",
+    "inspector": "bash -c 'source .env && npx @modelcontextprotocol/inspector node ../bin/${PROJECT}/index.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server-everything": "^2025.7.1",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "typescript": "^5.9.2"
+  }
+}
