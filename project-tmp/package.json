@@ -1,10 +1,11 @@
 {
   "type": "module",
+  "main": "src/index.js",
   "scripts": {
     "echo": "bash -c 'source .env && echo ${PROJECT}'",
-    "init": "bash -c 'source .env && sed -e \"s/\\${PROJECT}/${PROJECT}/g\" tsconfig.json.tmp > tsconfig.json'",
+    "init": "bash -c 'source .env && sed -e \"s/\\${PROJECT}/${PROJECT}/g\" tsconfig.json.tmp > tsconfig.json' && rm tsconfig.json.tmp && mkdir src && touch src/index.ts && npm init",
     "build": "tsc",
-    "client": "bash -c 'source .env && npm run build && node ../bin/${PROJECT}/client.js'",
+    "client": "bash -c 'source .env && npm run build && node --env-file=.env ../bin/${PROJECT}/client.js'",
     "inspector": "bash -c 'source .env && npx @modelcontextprotocol/inspector node ../bin/${PROJECT}/index.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
